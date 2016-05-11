@@ -3,14 +3,16 @@ board = input("What file is being used as the board? ")
 
 
 real_rows = []
-file11 = open (board, "r+")
-rows = file11.readlines()
-file11.close()
+#add the empty board to real_rows list
+file = open (board, "r+")
+rows = file.readlines()
+file.close()
 for item in rows:
     result = ""
     new = item.strip()
     result = result + new
     real_rows.append(result)
+#variables to count stuff
 number_of_x = 0
 number_of_o = 0
 gamewon = False
@@ -22,17 +24,17 @@ while gamewon == False:
     file = open (board, "w") 
     file.close()
     
-    file444 = open(board, "r+")
-    rows2 = file444.readlines()
+    file2 = open(board, "r+")
+    rows2 = file2.readlines()
     for item in rows2:
         result = ""
         new = item.strip()
         result = result + new
         real_rows.append(result)
     for item in real_rows:
-        file444.write(item)
-        file444.write("\n")
-    file444.close()
+        file2.write(item)
+        file2.write("\n")
+    file2.close()
     turn = turn + 1
     print ("Game Status:")
     print (real_rows[0],real_rows[1],real_rows[2], sep = "")
@@ -44,9 +46,6 @@ while gamewon == False:
         check = input("is it your turn?")
         if check == "yes":
             break
-    file666 = open (board, "r")
-    rows2 = file666.readlines() 
-    file666.close()
     if turn > 3 and real_rows[0] == "[]":
         if real_rows[0] == real_rows[1] == real_rows[2] == real_rows[3] == real_rows[4] == real_rows[5] == real_rows[6] == real_rows[7] == real_rows[8]:
             if player == "X":
@@ -114,11 +113,7 @@ while gamewon == False:
         elif rownum == 2 and real_rows[columnnum + 6] == "[]":
             real_rows[columnnum + 6] = "[O]"
             number_of_o = number_of_o + 1
-        
             
-
-    #updating and writing boardstate to file
-  
     turn = turn + 1
     
     # Win conditions Again
@@ -146,15 +141,18 @@ if player == "X":
 else:
     print ("The Winner is", player)
     
-# Reset Board
-file6 = open(board, "w")
-file6.close()
-file7 = open (board, "r+")
+# Clear Board
+file3 = open(board, "w")
+file3.close()
+#rewrite empty spaces
+file4 = open (board, "r+")
 count = 0
 while count < 9:
-    file7.write("[]")
-    file7.write("\n")
+    file4.write("[]")
+    file4.write("\n")
     count = count + 1
-file7.close()
+file4.close()
+
+
 
 
