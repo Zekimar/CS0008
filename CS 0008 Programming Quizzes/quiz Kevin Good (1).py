@@ -1,9 +1,10 @@
 # Code by Kevin Good
 count = 0
 word = input("Enter a word: ")
+word = word.lower()
 count2 = len(word)
 if count2 == 1:
-    if word == "i" or word == "a" or word == "I" or word == "A":
+    if word == "i" or word == "a":
         print("It's a palindrome!")
     else:
         print("Not a Palindrome")
@@ -16,6 +17,7 @@ if word[count] != word[count2-1-count]:
     print("Not a palindrome")
     
     
+      
       
     
     
