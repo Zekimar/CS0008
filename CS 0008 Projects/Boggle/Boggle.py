@@ -126,7 +126,7 @@ def determinePossibleSpaces(char):
         i = i + 1
     return possibleSpacesForLetter
 
-def areLettersConnected(char1, char2):
+def areLettersConnected(char1, char2, count):
     psfl = determinePossibleSpaces(char1)
     psfl2 = determinePossibleSpaces(char2)
     for pos in psfl:
@@ -134,14 +134,17 @@ def areLettersConnected(char1, char2):
         while i < len(psfl2):
             if areSpacesConnected(pos, psfl2[i]):
                 positionsOfLetters.append(pos)
+                if (count + 1) == (len(word) - 1):
+                    positionsOfLetters.append(psfl2[i])
                 return True
             i = i + 1
     return False
 
 def isWordConnected(word):
+    positionsOfLetters.clear()
     count = 0
     while count < (len(word) - 1):
-        if areLettersConnected(word[count], word[count+1]):
+        if areLettersConnected(word[count], word[count+1], count):
             count = count + 1
         else:
             print ("some letters aren't connected!")
@@ -157,6 +160,18 @@ def calculateScore(word):
         total += scores[letter]
     return total
 
+#determine if a letter on board is used more than once
+def areLettersUsedOnce():
+    i = 0
+    j = 0
+    while j < (len(positionsOfLetters) - 1):
+        while i < (len(positionsOfLetters)):
+            if positionsOfLetters[i] == positionsOfLetters[j] and i != j:
+                return False
+            i = i + 1
+        j = j + 1
+    return True
+
 while True:
     print ("----------------------------------")
     print ("Welcome to Boggle hardmode by Kevin Good!")
@@ -171,12 +186,16 @@ while True:
     #determine if the input is legal according to boggle rules
     print ("results:")
     if isAWord(word2) and isOnBoard(word) and isWordConnected(word) and isNotGuessed(word):
-        score = score + calculateScore(word)
-        print("success! your score is now",score)
+        if areLettersUsedOnce():
+            score = score + calculateScore(word)
+            print("success! your score is now",score)
+        else:
+            print ("INVALID GUESS")
         guessedWords.append(word)
     else:
         guessedWords.append(word)
         print ("INVALID GUESS")
+#update scores
 file2 = open("scores.txt", "r")
 scores = file2.readlines()
 file2.close()
@@ -195,4 +214,3 @@ for score3 in scores:
     file3.write(str(score3))
 file3.close()
 file.close()
-
