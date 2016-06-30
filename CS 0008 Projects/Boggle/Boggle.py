@@ -211,6 +211,10 @@ file3 = open("scores.txt", "w")
 initials = input("enter your initials:")
 for score3 in scores:
     print (score3)
-    file3.write(str(score3))
+    if int(score3) > 0:
+        score3 = str(score3) + "\n"
+    file3.write(score3)
 file3.close()
 file.close()
+
+
